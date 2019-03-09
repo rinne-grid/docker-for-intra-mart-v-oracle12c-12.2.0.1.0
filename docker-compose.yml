@@ -1,0 +1,79 @@
+version: '3.6'
+services:
+  ap:
+    build: 
+      context: ./ap
+      args:
+        arg_http_proxy        : ${HTTP_PROXY}
+        arg_https_proxy       : ${HTTPS_PROXY}
+        IM_STORAGE_ROOT       : ${IM_STORAGE_ROOT}
+        arg_im_java_home      : ${IM_JAVA_HOME}
+        arg_resin_server_name : ${RESIN_SERVER_NAME}
+        arg_resin_guest_port  : ${RESIN_GUEST_PORT}
+        arg_jdbc_file_name    : ${JDBC_FILE_NAME}
+        arg_jdbc_download_url : ${JDBC_DOWNLOAD_URL}
+        arg_resin_home        : ${RESIN_HOME}
+    deploy:
+      resources:
+        limits:
+          memory: ${AP_MEMORY_SIZE}
+    ports:
+      - "${RESIN_HOST_PORT}:${RESIN_GUEST_PORT}"
+    command: ./bin/resinctl -server app-0 start-with-foreground
+    volumes:
+      - ./ap/war:/war
+      - resin-data:${RESIN_HOME}
+      - im-storage:${IM_STORAGE_ROOT}
+    environment:
+      - HTTP_PROXY
+      - HTTPS_PROXY
+      - IM_STORAGE_ROOT
+      - IM_JAVA_HOME
+      - RESIN_SERVER_NAME
+      - RESIN_GUEST_PORT
+      - JDBC_FILE_NAME
+      - JDBC_DOWNLOAD_URL
+      - RESIN_HOME
+    depends_on:
+      - "db"
+  db:
+    image: oracle12c_local:latest
+    build:
+      context: ./db/build
+      args:
+        - HTTP_PROXY=${HTTP_PROXY}
+        - HTTPS_PROXY=${HTTPS_PROXY}
+        - ORACLE_SID=${ORACLE_SID}
+        - ORACLE_PDB=${ORACLE_PDB}
+        - ORACLE_PWD=${ORACLE_PWD}
+        - ORACLE_CHARACTERSET=${ORACLE_CHARACTERSET}
+        - DB_EDITION=${DB_EDITION}
+    env_file:
+      - ./.env
+    environment:
+      - ORACLE_SID
+      - ORACLE_PDB
+      - ORACLE_PWD
+      - IMART_TABLESPACE_NAME
+      - IMART_PROFILE_NAME
+      - IMART_USER_NAME
+      - IMART_USER_PASSWORD
+    volumes:
+      - oracle-db:/opt/oracle/oradata
+      - ./db/scripts_startup:/opt/oracle/scripts/startup
+      - ./db/scripts_setup:/opt/oracle/scripts/setup
+    ports:
+      - "${TNS_LISTENER_PORT}:1521"
+      - "${EM_EXPRESS_PORT}:5500"
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - ${DBADM_HOST_PORT}:${DBADM_GUEST_PORT}
+volumes:
+  resin-data:
+    driver: local
+  im-storage:
+    driver: local
+  oracle-db:
+    driver: local

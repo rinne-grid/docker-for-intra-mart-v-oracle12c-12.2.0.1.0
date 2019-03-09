@@ -1,0 +1,6 @@
+ap/resin-pro/*
+ap/resin/*
+ap/war/*
+ap/jdbc/*
+db/build/*.zip
+!.gitkeep
