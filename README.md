@@ -144,7 +144,7 @@ https://qiita.com/mks1412/items/9356187a3bcb20b64e82
 
   https://www.oracle.com/technetwork/jp/database/enterprise-edition/downloads/index.html
 
-* ダウンロードしたファイル(linuxx64-12201_database.zip)をdb/buildフォルダに配置します
+* ダウンロードしたファイル(linuxx64-12201_database.zip)をim/db/buildフォルダに配置します
 
 
 #### [5] Jugglingでwarファイルを作成
@@ -231,13 +231,13 @@ imart.warという名称でwarファイルを出力したら、
 * resin-proフォルダをim/apフォルダにコピーします
 
 
-#### [8] JDBCドライバー(ojdbc8.jar)をダウンロードし、ap/resin-pro/libにコピー
+#### [8] JDBCドライバー(ojdbc8.jar)をダウンロードし、im/ap/resin-pro/libにコピー
 
 * 下記のURLにアクセスし、ojdbc8.jarを見つけ、ダウンロードします
 
   https://www.oracle.com/technetwork/database/features/jdbc/jdbc-ucp-122-3110062.html
 
-* ojdbc8.jarをap/resin-pro/libにコピーします
+* ojdbc8.jarをim/ap/resin-pro/libにコピーします
 
 #### [9] プロジェクトのフォルダ構成の確認
 
