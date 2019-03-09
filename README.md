@@ -290,7 +290,7 @@ im
 -Xmx, -Xmsの値が、初期状態だと8192m(8GB)が設定されているため、自分のPCのメモリ状況に合わせて変更します
 
 ```ini
-jvm_args : -Dfile.encoding=UTF-8 -Djava.io.tmpdir=tmp -Xmx1500m -Xms1500m -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=30 -XX:NewSize=512m -XX:MaxNewSize=512m -XX:+CMSClassUnloadingEnabled -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+HeapDumpOnOutOfMemoryError -Xloggc:log/gc.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=10M
+jvm_args : -Dfile.encoding=UTF-8 -Djava.io.tmpdir=tmp -Xmx4096m -Xms4096m -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=30 -XX:NewSize=512m -XX:MaxNewSize=512m -XX:+CMSClassUnloadingEnabled -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+HeapDumpOnOutOfMemoryError -Xloggc:log/gc.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=10M
 ```
 
 * HTTPプロキシの設定 im/.env
@@ -353,9 +353,11 @@ db_1       | EXTENT MANAGEMENT LOCAL AUTOALLOCATE
 ホストマシン側からOracle Databaseに接続したい場合は下記の指定を行います。
 
 (設定を変更していない場合)
-* ID:IMART
-* パスワード:IMART
-* SID:192.168.99.100:15210/RNGD
+
+|ユーザID|パスワード|SID|
+|----------|--------|----------|
+|IMART|IMART|192.168.99.100:15210/RNGD|
+
 （Docker for WindowsやDocker for Macの場合は、上記IPアドレスではなく  localhost:15210  もしくは自分で設定しているホスト名やIPアドレスを指定します。）
 
 
